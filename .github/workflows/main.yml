@@ -21,10 +21,3 @@ jobs:
       run: |
         sudo apt update
         sudo apt install tesseract-ocr poppler-utils imagemagick
-    - name: Install testing dependencies
-      run: |
-        pip install -U ".[test]"
-    - name: Lint with flake8
-      run: flake8
-    - name: Test with pytest
-      run: pytest
