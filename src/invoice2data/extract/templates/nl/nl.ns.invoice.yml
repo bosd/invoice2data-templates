@@ -1,0 +1,34 @@
+# -*- coding: utf-8 -*-
+# SPDX-License-Identifier: MIT
+issuer: NS
+fields:
+  amount: Totaalbedrag\s+[€]\s+(\d+.\d{2})
+  amount_untaxed: Totaal exclusief BTW\s+[€]\s+(\d+.\d{2})
+  sum_amount_tax:
+    - Totaal BTW\s9[%]\s+€\s+(\d+,\d{2})
+    - Totaal BTW\s21[%]\s+€\s+(\d+,\d{2})
+  date: Factuurdatum\s+(\d{2} .+ \d{4})
+  invoice_number: Factuurnummer\s+(\d{2} \d{3} \d{2} \d{3} \d{2})
+  static_vat: NL803882804B01
+  mandate_id: machtiging is (\d{12}).
+  Incassant-ID: is (NL\d{2}\s+ZZZ\s+\d{4}\s+\d{4}\s+\d{4}).
+lines:
+    start: Omschrijving
+    end: Subtotaal
+    line: '^\s+(?P<description>\w+(?:\S|[ ]\w\w+){1}).+(?P<vat_percent>\d{1,2})[%]\s[€]\s+(?P<price_unit>\d{1,}.\d{2})'
+    types:
+      vat_percent: float
+      price_unit: float
+keywords:
+  - NS Reizigers
+  - NL803882804B01
+options:
+  date_formats:
+    - '%Y %B %d'
+  currency: EUR
+  languages:
+    - nl
+  decimal_separator: ','
+  replace:
+    - ['\n\s+0000', ' 0000']
+

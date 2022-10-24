@@ -1,0 +1,34 @@
+# -*- coding: utf-8 -*-
+# SPDX-License-Identifier: MIT
+issuer: Parkmobile
+fields:
+  amount: TOTAAL\s+[€] (\d+.\d{2}) #legacy layout
+  amount: TOTAAL TE VOLDOEN\s+\d+[,]\d{2}\s+\d+[,]\d{2}\s+(\d+[,]\d{2})
+  amount_untaxed: TOTAAL TE VOLDOEN\s+(\d+[,]\d{2})\s+
+  date: DATUM\s+(\d{1,2}-\d{2}-\d{4})
+  invoice_number: FACTUUR [#]\s+(\d+)
+  static_vat: NL813399051B01
+  date_start: PERIODE \s+(\w+\s\d{4})
+lines:
+    start: OMSCHRIJVING
+    end: VERSCHULDIGD BEDRAG
+    line: (?P<product>(\w+(?:\s\S+)*))\s+(?P<qty>(\d{0,4}))\s+(?P<price_unit_ex>\d+.\d{2})\s+(?P<unittax>\d+.\d{2})?\s+(?P<vat_percent>(\d{2})[%])?\s+(?P<line_total>(\d+.\d{2}))
+# Below is alternative regex, need better docs for testing
+# (?P<product>(\w+(?:\S|[.]\w\w+|\n)*))\s+(?P<qty>(\d{0,4}))?\s+(?P<price_unit_ex>\d+.\d{2})\s+(?P<unittax>\d+.\d{2})
+    types:
+      qty: float
+      price_unit: float
+      vat_percent: float
+      unittax: float
+      line_total: float
+keywords:
+  - Parkmobile
+  - NL813399051B01
+options:
+  date_formats:
+    - '%d %m %Y'
+  currency: EUR
+  languages:
+    - nl
+  decimal_separator: ','
+
